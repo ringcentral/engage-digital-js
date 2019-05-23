@@ -1,0 +1,51 @@
+{
+  "name": "ringcentral-engage-client",
+  "version": "0.1.0",
+  "description": "Simple JavaScript wrapper for RingCentral Engage API.",
+  "author": "Drake Zhao <drake.zhao@ringcentral.com>",
+  "license": "MIT",
+  "main": "dist/ringcentral-engage.js",
+  "module": "src/ringcentral-engage.js",
+  "scripts": {
+    "test": "standard && jest",
+    "release": "webpack --progress --colors",
+    "prepublishOnly": "yarn release"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "urijs": "^1.19.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^24.8.0",
+    "babel-loader": "^8.0.6",
+    "concat-stream": "^2.0.0",
+    "dotenv-override-true": "^6.2.0",
+    "form-data": "^2.3.3",
+    "husky": "^2.3.0",
+    "jest": "^24.8.0",
+    "ramda": "^0.26.1",
+    "standard": "^12.0.1",
+    "timeout-as-promise": "^1.0.0",
+    "webpack": "^4.32.1",
+    "webpack-cli": "^3.3.2"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "roots": ["./test"],
+    "setupFiles": [
+      "dotenv-override-true/config"
+    ]
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "ignore": [
+      "*-compiled.js",
+      "/dist/"
+    ]
+  }
+}
