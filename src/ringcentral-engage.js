@@ -83,4 +83,4 @@ class RingCentralEngage {
   }
 }
 
-module.exports = exports.default = RingCentralEngage
+export default RingCentralEngage
