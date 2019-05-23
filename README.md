@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/zxdong262/ringcentral-engage-client-js.svg?branch=release)](https://travis-ci.org/zxdong262/ringcentral-engage-client-js)
 
-Simple JavaScript wrapper for RingCentral Engage API.
+Simple JavaScript wrapper for RingCentral Engage API. [api docs](https://github.com/ringcentral/ringcentral-api-specs/tree/master/specs/dimelo-api).
 
 ## Installation
 
@@ -21,7 +21,7 @@ const rc = new RingCentralEnage(
   process.env.RINGCENTRAL_ENGAGE_API_TOKEN,
   process.env.RINGCENTRAL_ENGAGE_SERVER_URL
 )
-let r = await rc.get('/1.0/roles')
+let r = await rc.get('/1.0/roles').catch(console.log)
 expect(r.data.records.length > 0).toBe(true)
 ```
 
