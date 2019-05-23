@@ -9,7 +9,7 @@
   "scripts": {
     "test": "standard && jest",
     "release": "webpack --progress --colors",
-    "prepublishOnly": "yarn release"
+    "prepublishOnly": "npm run release"
   },
   "dependencies": {
     "axios": "^0.18.0",
