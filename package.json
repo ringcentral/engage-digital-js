@@ -36,7 +36,9 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "roots": ["./test"],
+    "roots": [
+      "./test"
+    ],
     "setupFiles": [
       "dotenv-override-true/config"
     ]
