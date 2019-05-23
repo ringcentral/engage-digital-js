@@ -16,3 +16,4 @@ db.sqlite
 .travis.yml
 webpack.config.babel.js
 yarn.lock
+/bin/
