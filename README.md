@@ -1,6 +1,6 @@
-# ringcentral-engage-client
+# Ringcentral Engage Digital Client js
 
-[![Build Status](https://travis-ci.org/zxdong262/ringcentral-engage-client-js.svg?branch=release)](https://travis-ci.org/zxdong262/ringcentral-engage-client-js)
+[![Build Status](https://travis-ci.org/ringcentral/engage-digital-client-js.svg?branch=release)](https://travis-ci.org/zxdong262/ringcentral-engage-client-js)
 
 Simple JavaScript wrapper for RingCentral Engage API. [api docs](https://github.com/ringcentral/ringcentral-api-specs/tree/master/specs/dimelo-api).
 

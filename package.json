@@ -49,5 +49,23 @@
       "*-compiled.js",
       "/dist/"
     ]
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ringcentral/engage-digital-client-js.git"
+  },
+  "keywords": [
+    "ringcentral",
+    "engage",
+    "digital",
+    "js",
+    "sdk"
+  ],
+  "bugs": {
+    "url": "https://github.com/ringcentral/engage-digital-client-js/issues"
+  },
+  "homepage": "https://github.com/ringcentral/engage-digital-client-js#readme"
 }
