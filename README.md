@@ -1,4 +1,4 @@
-# Ringcentral Engage Digital Client js
+# RingCentral Engage Digital Client for JavaScript
 
 [![Build Status](https://travis-ci.org/ringcentral/engage-digital-client-js.svg?branch=release)](https://travis-ci.org/zxdong262/ringcentral-engage-client-js)
 
