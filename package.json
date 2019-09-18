@@ -1,6 +1,6 @@
 {
   "name": "ringcentral-engage-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple JavaScript wrapper for RingCentral Engage API.",
   "author": "Drake Zhao <drake.zhao@ringcentral.com>",
   "license": "MIT",
