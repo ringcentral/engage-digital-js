@@ -72,7 +72,8 @@ class RingCentralEngage {
       ...headers,
       ...this._bearerAuthorizationHeader(),
       'X-User-Agent': userAgentHeader,
-      'RC-User-Agent': userAgentHeader
+      'RC-User-Agent': userAgentHeader,
+      'User-Agent': userAgentHeader
     }
   }
 
