@@ -1,6 +1,6 @@
 # RingCentral Engage Digital Client for JavaScript
 
-[![Build Status](https://travis-ci.org/ringcentral/engage-digital-js.svg?branch=release)](https://travis-ci.org/zxdong262/engage-digital-js)
+[![Build Status](https://travis-ci.org/ringcentral/engage-digital-js.svg?branch=release)](https://travis-ci.org/ringcentral/engage-digital-js)
 [![Coverage Status](https://coveralls.io/repos/github/ringcentral/engage-digital-js/badge.svg?branch=release)](https://coveralls.io/github/ringcentral/engage-digital-js?branch=release)
 
 Simple JavaScript wrapper for RingCentral Engage API. [api docs](https://engage-api-docs.readthedocs.io/).
