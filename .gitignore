@@ -8,3 +8,4 @@ yarn-error.log
 test/index.html
 test.pdf
 /temp/
+/coverage/

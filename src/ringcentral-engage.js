@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const version = process.env.version
 
+/* istanbul ignore next */
 class HTTPError extends Error {
   constructor (status, statusText, data, config) {
     super(`status: ${status}
@@ -26,6 +27,7 @@ class RingCentralEngage {
       try {
         return request(config)
       } catch (e) {
+        /* istanbul ignore next */
         if (e.response) {
           throw new HTTPError(e.response.status, e.response.statusText, e.response.data, e.response.config)
         } else {
@@ -36,7 +38,7 @@ class RingCentralEngage {
   }
 
   request (config) {
-    let uri = config.url.startsWith('http')
+    const uri = config.url.startsWith('http')
       ? config.url
       : this.server + config.url
     return this._axios.request({
