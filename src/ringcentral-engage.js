@@ -1,5 +1,7 @@
 // based on tyler's work: https://github.com/tylerlong/ringcentral-js-concise
 import axios from 'axios'
+import { EventEmitter } from 'events'
+import querystring from 'querystring'
 
 const version = process.env.version
 
@@ -17,11 +19,25 @@ config: ${JSON.stringify(config, null, 2)}`)
   }
 }
 
-class RingCentralEngage {
-  constructor (apiToken, server) {
+class RingCentralEngage extends EventEmitter {
+  constructor ({
+    apiToken,
+    server,
+    authUrl,
+    tokenUrl,
+    clientId,
+    clientSecret,
+    redirectUri
+  }) {
+    super()
     this.server = server
     this.apiToken = apiToken
     this._axios = axios.create()
+    this.authUrl = authUrl
+    this.tokenUrl = tokenUrl
+    this.redirectUri = redirectUri
+    this.clientId = clientId
+    this.clientSecret = clientSecret
     const request = this._axios.request.bind(this._axios)
     this._axios.request = (config) => {
       try {
@@ -41,11 +57,23 @@ class RingCentralEngage {
     const uri = config.url.startsWith('http')
       ? config.url
       : this.server + config.url
+
     return this._axios.request({
       ...config,
       url: uri.toString(),
       headers: this._patchHeaders(config.headers)
     })
+  }
+
+  token (_token) {
+    if (arguments.length === 0) { // get
+      return this._token
+    }
+    const tokenChanged = this._token !== _token
+    this._token = _token
+    if (tokenChanged) {
+      this.emit('tokenChanged', _token)
+    }
   }
 
   get (url, config = {}) {
@@ -81,8 +109,40 @@ class RingCentralEngage {
 
   _bearerAuthorizationHeader () {
     return {
-      Authorization: `Bearer ${this.apiToken}`
+      Authorization: `Bearer ${this.apiToken || this._token.access_token}`
     }
+  }
+
+  authorizeUri ({
+    redirectUri = this.redirectUri,
+    responseType = 'code',
+    state = ''
+  }) {
+    const authUrl = this.authUrl ||
+      this.server + '/oauth/authorize'
+    const query = `?client_id=${this.clientId}&response_type=${responseType}&state=${state}&redirect_uri=${encodeURIComponent(redirectUri)}`
+    return `${authUrl}${query}`
+  }
+
+  async authorize ({
+    code,
+    redirectUri = this.redirectUri
+  }, options = {}) {
+    const tokenUrl = this.tokenUrl ||
+      `${this.server}/oauth/token`
+    const data = querystring.stringify({
+      grant_type: 'authorization_code',
+      code,
+      redirect_uri: redirectUri,
+      client_id: this.clientId,
+      client_secret: this.clientSecret
+    })
+    const r = await this._axios.request({
+      method: 'post',
+      url: tokenUrl,
+      data
+    })
+    this.token(r.data)
   }
 }
 

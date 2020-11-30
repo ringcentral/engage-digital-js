@@ -4,8 +4,10 @@ import RingCentralEnage from '../src/ringcentral-engage'
 jest.setTimeout(64000)
 
 const rc = new RingCentralEnage(
-  process.env.RINGCENTRAL_ENGAGE_API_TOKEN,
-  process.env.RINGCENTRAL_ENGAGE_SERVER_URL
+  {
+    apiToken: process.env.RINGCENTRAL_ENGAGE_API_TOKEN,
+    server: process.env.RINGCENTRAL_ENGAGE_SERVER_URL
+  }
 )
 
 function isError (e) {
@@ -14,7 +16,8 @@ function isError (e) {
 
 describe('ringcentral enagage voice api', () => {
   test('basic test', async () => {
-    const r = await rc.get('/1.0/roles')
+    const r = await rc.get('/1.0/roles').catch(console.log)
+    console.log(r)
     expect(r.data.records.length > 0).toBe(true)
     try {
       await rc.post('/1.0/roles')
