@@ -15,6 +15,10 @@ npm i ringcentral-engage-client
 
 ## Usage
 
+### Api token
+
+https://developers.ringcentral.com/engage/digital/guide/basics/auth
+
 ```js
 import RingCentralEngage from 'ringcentral-engage-client'
 
@@ -25,6 +29,30 @@ const rc = new RingCentralEnage(
 let r = await rc.get('/1.0/roles').catch(console.log)
 expect(r.data.records.length > 0).toBe(true)
 ```
+
+### Oauth
+
+https://developers.ringcentral.com/engage/digital/guide/app-sdk/config
+
+```js
+import RingCentralEngage from 'ringcentral-engage-client'
+
+const ed = new RingCentralEngage({
+  server: env.RINGCENTRAL_ENGAGE_DIGITAL_SERVER,
+  authUrl: env.RINGCENTRAL_ENGAGE_DIGITAL_APP_AUTH_URL,
+  tokenUrl: env.RINGCENTRAL_ENGAGE_DIGITAL_APP_TOKEN_URL,
+  clientId: env.RINGCENTRAL_ENGAGE_DIGITAL_APP_KEY,
+  clientSecret: env.RINGCENTRAL_ENGAGE_DIGITAL_APP_SECRET,
+  redirectUri: env.RINGCENTRAL_APP_SERVER + '/oauth'
+})
+await ed.authorize({ code })
+let userInfo = await ed.get('/1.0/users/me')
+userInfo = userInfo.data
+const id = userInfo.id.toString()
+
+```
+
+Check https://github.com/ringcentral/engage-digital-app-sdk-demo-app as example
 
 ## Test
 
