@@ -1,5 +1,5 @@
 /* eslint-env jest */
-import RingCentralEnage from '../src/ringcentral-engage'
+import RingCentralEnage from '../src/ringcentral-engage-digital.ts'
 
 jest.setTimeout(64000)
 

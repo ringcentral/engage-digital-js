@@ -4,10 +4,10 @@ const pack = require('./package.json')
 const defaultConfig = {
   mode: 'production',
   devtool: 'source-map',
-  entry: './src/ringcentral-engage.js',
+  entry: './src/ringcentral-engage-digital.ts',
   output: {
-    filename: 'ringcentral-engage.js',
-    library: 'RingCentral',
+    filename: 'ringcentral-engage-digital.js',
+    library: 'RingCentralEngageDigital',
     libraryTarget: 'umd',
     globalObject: 'this' // fix window undefined issue in node
   },
@@ -18,6 +18,17 @@ const defaultConfig = {
       amd: 'axios',
       root: 'axios'
     }
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js']
+  },
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader'
+      }
+    ]
   },
   plugins: [
     new webpack.DefinePlugin({

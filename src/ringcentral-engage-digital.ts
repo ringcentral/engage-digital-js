@@ -1,13 +1,18 @@
 // based on tyler's work: https://github.com/tylerlong/ringcentral-js-concise
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { EventEmitter } from 'events'
 import querystring from 'querystring'
+import { Options, Token, Config, Data } from './types'
 
 const version = process.env.version
 
 /* istanbul ignore next */
 class HTTPError extends Error {
-  constructor (status, statusText, data, config) {
+  status: number
+  statusText: string
+  data: Data
+  config: Config
+  constructor (status: number, statusText: string, data: Data, config: Config) {
     super(`status: ${status}
 statusText: ${statusText}
 data: ${JSON.stringify(data, null, 2)}
@@ -20,6 +25,16 @@ config: ${JSON.stringify(config, null, 2)}`)
 }
 
 class RingCentralEngage extends EventEmitter {
+  apiToken: string | undefined
+  server: string
+  authUrl: string | undefined
+  tokenUrl: string | undefined
+  clientId: string | undefined
+  clientSecret: string | undefined
+  redirectUri: string | undefined
+  _axios: AxiosInstance
+  _token: Token | undefined
+
   constructor ({
     apiToken,
     server,
@@ -28,7 +43,7 @@ class RingCentralEngage extends EventEmitter {
     clientId,
     clientSecret,
     redirectUri
-  }) {
+  }: Options) {
     super()
     this.server = server
     this.apiToken = apiToken
@@ -53,7 +68,7 @@ class RingCentralEngage extends EventEmitter {
     }
   }
 
-  request (config) {
+  request (config: Config) {
     const uri = config.url.startsWith('http')
       ? config.url
       : this.server + config.url
@@ -65,7 +80,7 @@ class RingCentralEngage extends EventEmitter {
     })
   }
 
-  token (_token) {
+  token (_token: Token) {
     if (arguments.length === 0) { // get
       return this._token
     }
@@ -76,27 +91,27 @@ class RingCentralEngage extends EventEmitter {
     }
   }
 
-  get (url, config = {}) {
+  get (url: string, config: Config = {}) {
     return this.request({ ...config, method: 'get', url })
   }
 
-  delete (url, config = {}) {
+  delete (url: string, config: Config = {}) {
     return this.request({ ...config, method: 'delete', url })
   }
 
-  post (url, data = undefined, config = {}) {
+  post (url: string, data: Data | undefined = undefined, config: Config = {}) {
     return this.request({ ...config, method: 'post', url, data })
   }
 
-  put (url, data = undefined, config = {}) {
+  put (url: string, data: Data | undefined = undefined, config: Config = {}) {
     return this.request({ ...config, method: 'put', url, data })
   }
 
-  patch (url, data = undefined, config = {}) {
+  patch (url: string, data: Data | undefined = undefined, config: Config = {}) {
     return this.request({ ...config, method: 'patch', url, data })
   }
 
-  _patchHeaders (headers) {
+  _patchHeaders (headers: Data = {}) {
     const userAgentHeader = `ringcentral-engage-client-js/v${version}`
     return {
       ...headers,
@@ -108,8 +123,10 @@ class RingCentralEngage extends EventEmitter {
   }
 
   _bearerAuthorizationHeader () {
+    const token = this.apiToken ||
+      (this._token ? this._token.access_token : '')
     return {
-      Authorization: `Bearer ${this.apiToken || this._token.access_token}`
+      Authorization: `Bearer ${token}`
     }
   }
 
@@ -120,14 +137,17 @@ class RingCentralEngage extends EventEmitter {
   }) {
     const authUrl = this.authUrl ||
       this.server + '/oauth/authorize'
-    const query = `?client_id=${this.clientId}&response_type=${responseType}&state=${state}&redirect_uri=${encodeURIComponent(redirectUri)}`
+    const query = `?client_id=${this.clientId}&response_type=${responseType}&state=${state}&redirect_uri=${encodeURIComponent(redirectUri || '')}`
     return `${authUrl}${query}`
   }
 
   async authorize ({
     code,
     redirectUri = this.redirectUri
-  }, options = {}) {
+  }: {
+    code: string,
+    redirectUri: string | undefined
+  }) {
     const tokenUrl = this.tokenUrl ||
       `${this.server}/oauth/token`
     const data = querystring.stringify({
