@@ -39,5 +39,16 @@ describe('ringcentral enagage voice api', () => {
     } catch (e) {
       expect(isError(e)).toBe(true)
     }
+    try {
+      await rc.authorize({
+        code: 'x'
+      })
+    } catch (e) {
+      expect(isError(e)).toBe(true)
+    }
+    rc.token('s')
+    expect(rc.token()).toBe('s')
+    const u = rc.authorizeUri({})
+    expect(u.startsWith(process.env.RINGCENTRAL_ENGAGE_SERVER_URL)).toBe(true)
   })
 })
