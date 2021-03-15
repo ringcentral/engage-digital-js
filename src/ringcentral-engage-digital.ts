@@ -54,7 +54,7 @@ class RingCentralEngage extends EventEmitter {
     this.clientId = clientId
     this.clientSecret = clientSecret
     const request = this._axios.request.bind(this._axios)
-    this._axios.request = (config) => {
+    this._axios.request = (config: Config) => {
       try {
         return request(config)
       } catch (e) {
