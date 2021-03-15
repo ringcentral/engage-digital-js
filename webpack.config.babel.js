@@ -11,6 +11,13 @@ const defaultConfig = {
     libraryTarget: 'umd',
     globalObject: 'this' // fix window undefined issue in node
   },
+  resolve: {
+    fallback: {
+      url: require.resolve('url'),
+      querystring: require.resolve('querystring-es3')
+    },
+    extensions: ['.tsx', '.ts', '.js']
+  },
   externals: {
     axios: {
       commonjs: 'axios',
@@ -18,9 +25,6 @@ const defaultConfig = {
       amd: 'axios',
       root: 'axios'
     }
-  },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js']
   },
   module: {
     rules: [
